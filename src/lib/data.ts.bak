@@ -1,0 +1,471 @@
+import { LucideIcon, Layout, Database, Terminal, Server } from "lucide-react";
+
+export interface Screenshot {
+  url: string;
+  caption: string;
+  captionEn: string;
+  description?: string;
+  descriptionEn?: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  titleEn: string;
+  category: string;
+  categoryEn: string;
+  description: string;
+  descriptionEn: string;
+  fullDescription: {
+    problem: string;
+    problemEn: string;
+    solution: string;
+    solutionEn: string;
+    result: string;
+    resultEn: string;
+  };
+  techStack: string[];
+  metrics: { label: string; labelEn: string; value: string }[];
+  screenshots: Screenshot[];
+  githubUrl?: string;
+  demoUrl?: string;
+  image: string;
+  role: string;
+  roleEn: string;
+  teamSize: string;
+  contribution: number;
+  status: "completed" | "in-progress" | "opensource";
+}
+
+export interface Experience {
+  id: string;
+  role: string;
+  roleEn: string;
+  company: string;
+  period: string;
+  description: string;
+  descriptionEn: string;
+  achievements: string[];
+  achievementsEn: string[];
+}
+
+export interface Skill {
+  category: string;
+  categoryEn: string;
+  items: string[];
+  icon: LucideIcon;
+}
+
+export const PROFILE = {
+  name: "Kim Min-su",
+  role: "UX-Oriented Frontend Developer",
+  roleEn: "UX-Oriented Frontend Developer",
+  email: "minsu.kim@example.com",
+  phone: "+82 10-1234-5678",
+  github: "github.com/minsu-dev",
+  linkedin: "linkedin.com/in/minsu-dev",
+  location: "Seoul, South Korea",
+  summary: "사용자 경험(UX)을 최우선으로 생각하는 3년차 프론트엔드 개발자입니다. 복잡한 데이터를 직관적인 인터페이스로 시각화하는 데 강점이 있으며, 웹 접근성과 성능 최적화에 깊은 관심을 가지고 있습니다. React 생태계와 최신 웹 표준 기술을 깊이 있게 이해하고 활용합니다.",
+  summaryEn: "A 3-year frontend developer who prioritizes user experience (UX). I excel at visualizing complex data into intuitive interfaces and have a deep interest in web accessibility and performance optimization. I have a thorough understanding of the React ecosystem and modern web standards.",
+  education: [
+    {
+      degree: "B.S. in Computer Science",
+      degreeKo: "컴퓨터공학 학사",
+      school: "Korea University",
+      period: "2016 - 2022",
+      details: "GPA: 3.8/4.5, Capstone Project Excellence Award",
+      detailsKo: "GPA: 3.8/4.5, 졸업작품 우수상"
+    },
+    {
+      degree: "Advanced Frontend Development Bootcamp",
+      degreeKo: "고급 프론트엔드 개발 부트캠프",
+      school: "Code Masters Academy",
+      period: "2018.09 - 2019.02",
+      details: "Graduated with Distinction, Final Project: E-commerce Platform",
+      detailsKo: "우수 졸업, 최종 프로젝트: 전자상거래 플랫폼"
+    }
+  ],
+  certifications: [
+    {
+      name: "AWS Certified Solutions Architect - Associate",
+      nameKo: "AWS 공인 솔루션 아키텍트 - 어소시에이트",
+      issuer: "Amazon Web Services",
+      date: "2023.06",
+      credentialId: "AWS-SAA-2023-06"
+    },
+    {
+      name: "Google Cloud Associate Cloud Engineer",
+      nameKo: "Google Cloud 어소시에이트 클라우드 엔지니어",
+      issuer: "Google Cloud",
+      date: "2023.03",
+      credentialId: "GCP-ACE-2023-03"
+    },
+    {
+      name: "Certified Kubernetes Application Developer (CKAD)",
+      nameKo: "Kubernetes 애플리케이션 개발자 인증",
+      issuer: "Cloud Native Computing Foundation",
+      date: "2022.11",
+      credentialId: "CKAD-2022-11"
+    }
+  ],
+  awards: [
+    {
+      title: "Best Innovation Award - Web Performance Optimization",
+      titleKo: "최우수 혁신상 - 웹 성능 최적화",
+      organization: "Korea Web Developer Conference 2023",
+      organizationKo: "한국 웹 개발자 컨퍼런스 2023",
+      date: "2023.09",
+      description: "WebAssembly를 활용한 프론트엔드 성능 최적화 기법 발표",
+      descriptionEn: "Presentation on frontend performance optimization using WebAssembly"
+    },
+    {
+      title: "Excellence Award - Accessibility Implementation",
+      titleKo: "우수상 - 웹 접근성 구현",
+      organization: "Digital Accessibility Forum 2023",
+      organizationKo: "디지털 접근성 포럼 2023",
+      date: "2023.05",
+      description: "WCAG 2.1 AAA 레벨 준수 포트폴리오 사이트 개발",
+      descriptionEn: "Portfolio website development compliant with WCAG 2.1 AAA level"
+    },
+    {
+      title: "Hackathon Winner - AI/ML Track",
+      titleKo: "해커톤 우승 - AI/ML 트랙",
+      organization: "Seoul Tech Hackathon 2022",
+      organizationKo: "서울 테크 해커톤 2022",
+      date: "2022.11",
+      description: "실시간 이미지 인식 기반 스마트 쇼핑 플랫폼 개발",
+      descriptionEn: "Real-time image recognition-based smart shopping platform development"
+    }
+  ]
+};
+
+export const SKILLS: Skill[] = [
+  {
+    category: "Frontend Core",
+    categoryEn: "Frontend Core",
+    items: ["React", "TypeScript", "Next.js", "Tailwind CSS", "HTML5/CSS3"],
+    icon: Layout
+  },
+  {
+    category: "State & Data",
+    categoryEn: "State & Data",
+    items: ["TanStack Query", "Zustand", "Redux Toolkit", "GraphQL"],
+    icon: Database
+  },
+  {
+    category: "Testing & Tools",
+    categoryEn: "Testing & Tools",
+    items: ["Vitest", "Jest", "Playwright", "Storybook", "Vite"],
+    icon: Terminal
+  },
+  {
+    category: "Backend Basic",
+    categoryEn: "Backend Basic",
+    items: ["Node.js", "Express", "PostgreSQL", "Prisma"],
+    icon: Server
+  }
+];
+
+export const EXPERIENCES: Experience[] = [
+  {
+    id: "exp-1",
+    role: "Senior Frontend Developer",
+    roleEn: "Senior Frontend Developer",
+    company: "TechFlow Inc.",
+    period: "2022.01 - Present",
+    description: "React와 TypeScript를 활용한 대규모 SPA 개발 및 성능 최적화 주도. 팀의 기술 리더로서 코드 리뷰, 아키텍처 설계, 신입 개발자 멘토링을 담당합니다.",
+    descriptionEn: "Led development and performance optimization of large-scale SPA using React and TypeScript. As a technical leader, responsible for code reviews, architecture design, and mentoring junior developers.",
+    achievements: [
+      "번들 크기 45% 감소 및 초기 로딩 시간 3초 단축 (Lighthouse 성능 점수 98점 달성)",
+      "접근성 감사 결과 WCAG 2.1 AAA 레벨 달성, 사용자 만족도 92% 기록",
+      "마이크로 프론트엔드 아키텍처 도입으로 팀 간 독립적 배포 가능하게 개선",
+      "WebAssembly 기반 데이터 처리 모듈 개발로 복잡한 계산 성능 10배 향상"
+    ],
+    achievementsEn: [
+      "Reduced bundle size by 45% and shortened initial load time by 3 seconds (achieved Lighthouse performance score of 98)",
+      "Achieved WCAG 2.1 AAA level accessibility, recorded 92% user satisfaction",
+      "Implemented micro frontend architecture enabling independent team deployments",
+      "Developed WebAssembly-based data processing module improving complex calculation performance by 10x"
+    ]
+  },
+  {
+    id: "exp-2",
+    role: "Frontend Developer",
+    roleEn: "Frontend Developer",
+    company: "DataViz Solutions",
+    period: "2020.06 - 2021.12",
+    description: "데이터 시각화 플랫폼의 프론트엔드 개발. D3.js, Canvas API를 활용한 고성능 차트 컴포넌트 개발 및 실시간 데이터 처리 구현.",
+    descriptionEn: "Frontend development for data visualization platform. Developed high-performance chart components using D3.js and Canvas API, implemented real-time data processing.",
+    achievements: [
+      "초당 100만 개 데이터 포인트를 60fps로 렌더링하는 고성능 차트 개발",
+      "WebGL 기반 히트맵 시각화로 메모리 사용량 70% 감소",
+      "국제 고객사 3곳과의 협업으로 다국어 지원 및 현지화 완성",
+      "개발 생산성 30% 향상을 위한 컴포넌트 라이브러리 구축"
+    ],
+    achievementsEn: [
+      "Developed high-performance chart rendering 1 million data points per second at 60fps",
+      "Reduced memory usage by 70% with WebGL-based heatmap visualization",
+      "Completed multilingual support and localization through collaboration with 3 international clients",
+      "Built component library improving development productivity by 30%"
+    ]
+  },
+  {
+    id: "exp-3",
+    role: "Junior Frontend Developer",
+    roleEn: "Junior Frontend Developer",
+    company: "WebStudio Korea",
+    period: "2019.03 - 2020.05",
+    description: "다양한 웹 프로젝트의 프론트엔드 개발. Vue.js와 React를 활용한 반응형 웹사이트 구축 및 크로스 브라우저 호환성 확보.",
+    descriptionEn: "Frontend development for various web projects. Built responsive websites using Vue.js and React, ensured cross-browser compatibility.",
+    achievements: [
+      "10개 이상의 클라이언트 프로젝트 완성 및 배포",
+      "SEO 최적화를 통해 검색 순위 평균 30% 상승",
+      "모바일 우선 설계 원칙 적용으로 모바일 사용자 경험 개선",
+      "팀 내 프론트엔드 표준화 가이드 문서 작성"
+    ],
+    achievementsEn: [
+      "Completed and deployed 10+ client projects",
+      "Improved search rankings by average 30% through SEO optimization",
+      "Enhanced mobile user experience by applying mobile-first design principles",
+      "Created frontend standardization guide documentation for the team"
+    ]
+  },
+  {
+    id: "exp-4",
+    role: "Freelance Web Developer",
+    roleEn: "Freelance Web Developer",
+    company: "Self-employed",
+    period: "2018.06 - 2019.02",
+    description: "스타트업 및 소상공인의 대상의 웹사이트 개발. HTML, CSS, JavaScript를 활용한 정적 및 동적 웹사이트 구축.",
+    descriptionEn: "Website development for startups and small businesses. Built static and dynamic websites using HTML, CSS, and JavaScript.",
+    achievements: [
+      "15개 이상의 소상공인 웹사이트 개발 및 운영",
+      "WordPress 커스터마이징으로 비용 효율적인 솔루션 제공",
+      "고객 만족도 95% 이상 달성",
+      "기술 블로그 운영으로 월 5,000+ 방문자 확보"
+    ],
+    achievementsEn: [
+      "Developed and maintained 15+ small business websites",
+      "Provided cost-effective solutions through WordPress customization",
+      "Achieved 95%+ customer satisfaction",
+      "Attracted 5,000+ monthly visitors through technical blog"
+    ]
+  }
+];
+
+export const PROJECTS: Project[] = [
+  {
+    id: "ai-ddos",
+    title: "AI DDoS Detection System",
+    titleEn: "AI DDoS Detection System",
+    category: "Security / AI",
+    categoryEn: "Security / AI",
+    description: "머신러닝 기반의 실시간 DDoS 공격 탐지 및 시각화 대시보드",
+    descriptionEn: "Real-time DDoS attack detection and visualization dashboard powered by machine learning",
+    fullDescription: {
+      problem: "기존 룰 기반 탐지 시스템의 높은 오탐률과 실시간 시각화 도구의 부재로 인한 대응 지연.",
+      problemEn: "High false positive rates in rule-based detection systems and delayed response due to lack of real-time visualization tools.",
+      solution: "Random Forest 모델을 웹어셈블리(Wasm)로 포팅하여 브라우저 내에서 실시간 추론을 수행하고, WebGL 기반의 대용량 트래픽 시각화 구현.",
+      solutionEn: "Ported Random Forest model to WebAssembly for real-time inference in the browser, implemented WebGL-based large-scale traffic visualization.",
+      result: "탐지 정확도 98.5% 달성, 대시보드 렌더링 성능 60fps 유지, 사고 대응 시간 40% 단축.",
+      resultEn: "Achieved 98.5% detection accuracy, maintained 60fps dashboard rendering, reduced incident response time by 40%."
+    },
+    techStack: ["React", "TypeScript", "WebGL", "WebAssembly", "Python"],
+    metrics: [
+      { label: "정확도", labelEn: "Accuracy", value: "98.5%" },
+      { label: "처리량", labelEn: "Processing", value: "50k req/s" },
+      { label: "지연시간", labelEn: "Latency", value: "< 10ms" }
+    ],
+    screenshots: [
+      {
+        url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+        caption: "실시간 트래픽 모니터링 대시보드",
+        captionEn: "Real-time Traffic Monitoring Dashboard",
+        description: "WebGL 기반의 고성능 시각화로 초당 수만 개의 패킷을 실시간으로 표시합니다.",
+        descriptionEn: "High-performance WebGL visualization displays tens of thousands of packets per second in real-time."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+        caption: "공격 탐지 및 분류 분석",
+        captionEn: "Attack Detection and Classification Analysis",
+        description: "머신러닝 모델이 탐지한 공격 유형을 실시간으로 분류하고 신뢰도를 표시합니다.",
+        descriptionEn: "ML model classifies detected attack types in real-time and displays confidence scores."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+        caption: "지역별 위협 분포 맵",
+        captionEn: "Geographical Threat Distribution Map",
+        description: "공격 출처를 지도 위에 표시하여 지역별 위협 수준을 한눈에 파악할 수 있습니다.",
+        descriptionEn: "Displays attack sources on a map for quick understanding of regional threat levels."
+      }
+    ],
+    githubUrl: "https://github.com/minsu-dev/ai-ddos-detection",
+    demoUrl: "https://ai-ddos-demo.example.com",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    role: "Lead Frontend Developer",
+    roleEn: "Lead Frontend Developer",
+    teamSize: "8명 (백엔드 3명, 프론트엔드 3명, 데이터 과학 2명)",
+    contribution: 40,
+    status: "completed"
+  },
+  {
+    id: "ecopath",
+    title: "EcoPath - Sustainable Routing App",
+    titleEn: "EcoPath - Sustainable Routing App",
+    category: "Sustainability / Mobile",
+    categoryEn: "Sustainability / Mobile",
+    description: "환경 친화적 경로 추천 모바일 앱. 탄소 배출량을 최소화하는 경로를 제시합니다.",
+    descriptionEn: "Eco-friendly route recommendation mobile app that suggests paths minimizing carbon emissions.",
+    fullDescription: {
+      problem: "기존 네비게이션 앱은 최단 경로만 제시하며, 환경 영향을 고려하지 않아 사용자의 지속 가능한 선택을 어렵게 함.",
+      problemEn: "Existing navigation apps only suggest shortest routes without considering environmental impact, making sustainable choices difficult for users.",
+      solution: "공개 데이터(대중교통, 자전거 도로, 녹지)를 활용하여 탄소 배출량, 건강도, 경험도를 종합 평가하는 알고리즘 개발. React Native로 iOS/Android 동시 지원.",
+      solutionEn: "Developed algorithm using open data (public transit, bike lanes, green spaces) to comprehensively evaluate carbon emissions, health, and experience. React Native for simultaneous iOS/Android support.",
+      result: "사용자 테스트 결과 과제 성공률 87%, 평균 소요시간 4분 30초. 6개월 내 월 5만 명 활성 사용자 달성.",
+      resultEn: "User testing achieved 87% task success rate, average completion time 4m 30s. Reached 50,000 monthly active users within 6 months."
+    },
+    techStack: ["React Native", "TypeScript", "GraphQL", "Node.js", "PostgreSQL"],
+    metrics: [
+      { label: "사용자", labelEn: "Users", value: "50k MAU" },
+      { label: "성공률", labelEn: "Success Rate", value: "87%" },
+      { label: "탄소 절감", labelEn: "Carbon Saved", value: "500t/year" }
+    ],
+    screenshots: [
+      {
+        url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2070&auto=format&fit=crop",
+        caption: "경로 추천 화면",
+        captionEn: "Route Recommendation Screen",
+        description: "탄소 배출량, 건강도, 경험도를 고려한 최적 경로 3가지를 제시합니다.",
+        descriptionEn: "Presents 3 optimal routes considering carbon emissions, health, and experience."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2070&auto=format&fit=crop",
+        caption: "탄소 배출량 비교",
+        captionEn: "Carbon Emission Comparison",
+        description: "각 경로별 탄소 배출량을 시각적으로 비교하여 환경 영향을 직관적으로 이해할 수 있습니다.",
+        descriptionEn: "Visually compare carbon emissions per route for intuitive understanding of environmental impact."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2070&auto=format&fit=crop",
+        caption: "사용자 통계 대시보드",
+        captionEn: "User Statistics Dashboard",
+        description: "누적 탄소 절감량, 운동 시간, 방문한 녹지 수 등 개인 통계를 추적합니다.",
+        descriptionEn: "Tracks personal statistics including cumulative carbon saved, exercise time, and visited green spaces."
+      }
+    ],
+    githubUrl: "https://github.com/minsu-dev/ecopath",
+    image: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop",
+    role: "Full Stack Developer",
+    roleEn: "Full Stack Developer",
+    teamSize: "5명 (디자인 1명, 개발 3명, PM 1명)",
+    contribution: 60,
+    status: "completed"
+  },
+  {
+    id: "trpg-platform",
+    title: "TRPG Platform - Collaborative Storytelling",
+    titleEn: "TRPG Platform - Collaborative Storytelling",
+    category: "Gaming / Real-time",
+    categoryEn: "Gaming / Real-time",
+    description: "실시간 협력 스토리텔링 TRPG 플랫폼. WebSocket 기반 멀티플레이 게임 환경.",
+    descriptionEn: "Real-time collaborative storytelling TRPG platform. WebSocket-based multiplayer gaming environment.",
+    fullDescription: {
+      problem: "기존 TRPG 플랫폼은 턴 기반 시스템으로 인해 게임 진행이 느리고, 실시간 상호작용이 제한적임.",
+      problemEn: "Existing TRPG platforms suffer from slow game progression due to turn-based systems and limited real-time interaction.",
+      solution: "WebSocket과 Operational Transformation을 활용한 실시간 협력 편집 엔진 개발. 게임 상태 동기화 지연시간 100ms 이하로 최적화.",
+      solutionEn: "Developed real-time collaborative editing engine using WebSocket and Operational Transformation. Optimized game state sync latency to under 100ms.",
+      result: "동시 접속 500명 이상 안정적 운영, 평균 세션 길이 3시간 30분, 사용자 재방문율 78%.",
+      resultEn: "Stable operation with 500+ concurrent users, average session length 3h 30m, 78% user return rate."
+    },
+    techStack: ["React", "TypeScript", "WebSocket", "Node.js", "Redis", "MongoDB"],
+    metrics: [
+      { label: "동시 접속", labelEn: "Concurrent Users", value: "500+" },
+      { label: "지연시간", labelEn: "Latency", value: "< 100ms" },
+      { label: "재방문율", labelEn: "Return Rate", value: "78%" }
+    ],
+    screenshots: [
+      {
+        url: "https://images.unsplash.com/photo-1611339555312-e607c04352fa?q=80&w=2070&auto=format&fit=crop",
+        caption: "게임 플레이 인터페이스",
+        captionEn: "Game Play Interface",
+        description: "실시간으로 동기화되는 게임 맵, 캐릭터, 채팅 인터페이스가 통합되어 있습니다.",
+        descriptionEn: "Integrated real-time synchronized game map, character, and chat interface."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1611339555312-e607c04352fa?q=80&w=2070&auto=format&fit=crop",
+        caption: "캐릭터 시트 에디터",
+        captionEn: "Character Sheet Editor",
+        description: "여러 플레이어가 동시에 캐릭터 정보를 편집할 수 있으며, 변경사항이 실시간으로 동기화됩니다.",
+        descriptionEn: "Multiple players can simultaneously edit character information with real-time synchronization."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1611339555312-e607c04352fa?q=80&w=2070&auto=format&fit=crop",
+        caption: "게임 세션 통계",
+        captionEn: "Game Session Statistics",
+        description: "플레이 시간, 주사위 운, 캐릭터 성장도 등 게임 진행 통계를 추적합니다.",
+        descriptionEn: "Tracks game progression statistics including playtime, dice luck, and character growth."
+      }
+    ],
+    githubUrl: "https://github.com/minsu-dev/trpg-platform",
+    demoUrl: "https://trpg-platform.example.com",
+    image: "https://images.unsplash.com/photo-1611339555312-e607c04352fa?q=80&w=1200&auto=format&fit=crop",
+    role: "Backend & Real-time Lead",
+    roleEn: "Backend & Real-time Lead",
+    teamSize: "6명 (프론트엔드 2명, 백엔드 3명, 게임 디자인 1명)",
+    contribution: 50,
+    status: "completed"
+  },
+  {
+    id: "nextcloud-ocr",
+    title: "Nextcloud OCR Integration",
+    titleEn: "Nextcloud OCR Integration",
+    category: "Document Processing",
+    categoryEn: "Document Processing",
+    description: "Nextcloud용 OCR 플러그인. 스캔 문서의 텍스트를 자동 추출하고 검색 가능하게 만듭니다.",
+    descriptionEn: "OCR plugin for Nextcloud. Automatically extracts text from scanned documents and makes them searchable.",
+    fullDescription: {
+      problem: "Nextcloud 사용자들이 스캔한 PDF 문서에서 텍스트를 추출하기 어렵고, 문서 검색 기능이 제한적임.",
+      problemEn: "Nextcloud users struggle to extract text from scanned PDF documents with limited document search functionality.",
+      solution: "Tesseract OCR을 Nextcloud 백엔드에 통합하고, 추출된 텍스트를 Elasticsearch에 인덱싱하여 빠른 검색 제공. 웹 UI에서 OCR 진행률 실시간 표시.",
+      solutionEn: "Integrated Tesseract OCR into Nextcloud backend, indexed extracted text in Elasticsearch for fast search. Real-time OCR progress display in web UI.",
+      result: "월 10만 건 이상의 문서 처리, 검색 응답 시간 < 500ms, 사용자 만족도 4.8/5.0.",
+      resultEn: "Processes 100,000+ documents monthly, search response time < 500ms, user satisfaction 4.8/5.0."
+    },
+    techStack: ["PHP", "React", "Tesseract OCR", "Elasticsearch", "Docker"],
+    metrics: [
+      { label: "월 처리량", labelEn: "Monthly Volume", value: "100k+" },
+      { label: "검색 속도", labelEn: "Search Speed", value: "< 500ms" },
+      { label: "만족도", labelEn: "Satisfaction", value: "4.8/5.0" }
+    ],
+    screenshots: [
+      {
+        url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2070&auto=format&fit=crop",
+        caption: "OCR 처리 대시보드",
+        captionEn: "OCR Processing Dashboard",
+        description: "대량의 문서를 일괄 처리하고 진행률을 실시간으로 모니터링할 수 있습니다.",
+        descriptionEn: "Batch process documents and monitor progress in real-time."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2070&auto=format&fit=crop",
+        caption: "텍스트 추출 결과",
+        captionEn: "Text Extraction Results",
+        description: "OCR 결과를 미리보기하고 필요시 수정할 수 있습니다.",
+        descriptionEn: "Preview OCR results and make corrections if needed."
+      },
+      {
+        url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=2070&auto=format&fit=crop",
+        caption: "전체 텍스트 검색",
+        captionEn: "Full-text Search",
+        description: "추출된 텍스트를 기반으로 문서 전체에서 빠르게 검색할 수 있습니다.",
+        descriptionEn: "Fast full-text search across all documents based on extracted text."
+      }
+    ],
+    githubUrl: "https://github.com/minsu-dev/nextcloud-ocr",
+    image: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop",
+    role: "Full Stack Developer",
+    roleEn: "Full Stack Developer",
+    teamSize: "3명 (개발 2명, QA 1명)",
+    contribution: 70,
+    status: "completed"
+  }
+];
